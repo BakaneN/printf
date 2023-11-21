@@ -3,11 +3,11 @@
 #include <stdarg.h>
 
 /**
- * printf - Custom printf function
- * @format: format string containing directives
- * Return: the number of characters printed
+ * _printf - Custom printf function
+ * @format: Format string containing directives
+ *
+ * Return: Number of characters printed (excluding null byte)
  */
-
 int _printf(const char *format, ...)
 {
 	va_list args;
@@ -25,25 +25,25 @@ int _printf(const char *format, ...)
 			ptr++;
 			switch (*ptr)
 			{
-				case 'c':
+			case 'c':
 				c = va_arg(args, int);
 				write(1, &c, 1);
 				count++;
-			break;
+				break;
 			case 's':
-			str = va_arg(args, char *);
-			while (*str)
+				str = va_arg(args, char *);
+				while (*str)
 				{
 					write(1, str, 1);
 					str++;
 					count++;
 				}
 				break;
-				case '%':
+			case '%':
 				write(1, "%", 1);
 				count++;
 				break;
-				default:
+			default:
 				write(1, "%", 1);
 				write(1, &(*ptr), 1);
 				count += 2;
@@ -51,14 +51,13 @@ int _printf(const char *format, ...)
 			}
 		}
 		else
-			{
+		{
 			write(1, &(*ptr), 1);
 			count++;
-			}
+		}
 	}
 
 	va_end(args);
 
 	return (count);
-
 }
